@@ -36,26 +36,6 @@ class SpeedService : Service() {
     override fun onCreate() {
         Log.d(SpeedService::class.java.canonicalName, "SERVICE ON CREATE...")
         (application as MyApplication).applicationComponent.inject(this)
-        /*val notificationIntent = Intent(this, MainActivity::class.java)
-        val pendingIntent =
-            PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE)
-
-
-        val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(IconCompat.createWithResource(this, R.mipmap.ic_launcher_round))
-            .setContentTitle("Detection Location")
-            .setOngoing(true)
-            .setPriority(NotificationCompat.PRIORITY_MIN)
-            .setCategory(NotificationCompat.CATEGORY_SERVICE)
-            .setContentIntent(pendingIntent)
-            .setChannelId(CHANNEL_ID)
-            .setSilent(false)
-            .setAutoCancel(false)
-            .build()
-
-        startForeground(
-            SERVICE_ID, notificationBuilder, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION
-        )*/
 
         startAsForegroundService()
 

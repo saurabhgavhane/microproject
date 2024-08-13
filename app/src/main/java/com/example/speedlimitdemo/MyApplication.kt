@@ -23,6 +23,5 @@ class MyApplication : Application() {
 
     private fun initDagger(){
         applicationComponent = DaggerApplicationComponent.builder().appModule(AppModule(this)).build()
-        //notificationManager.initFirebaseClient()
     }
 }
