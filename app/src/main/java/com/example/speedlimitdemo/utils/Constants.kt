@@ -3,7 +3,7 @@ package com.example.speedlimitdemo.utils
 object Constants {
 
     const val SHOW_IN_KM: Boolean= true
-    const val MIN_DISTANCE: Float = 100f
+    const val MIN_DISTANCE: Float = 5f
     const val MIN_TIME: Long = 1000
     const val DEFAULT_MAX_SPEED = 4
 

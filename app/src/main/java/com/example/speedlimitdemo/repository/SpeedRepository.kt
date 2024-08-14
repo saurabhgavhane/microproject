@@ -29,11 +29,6 @@ open class SpeedRepository @Inject constructor() : ISpeedRepository {
 
     override suspend fun getDefaultSpeedLimit(carId: String, fleetId: String): DefaultSpeedLimit {
         applicationPreferences.setInt(PreferenceType.DEFAULT_MAX_SPEED, Constants.DEFAULT_MAX_SPEED)
-        Log.d(
-            SpeedRepository::class.java.canonicalName,
-            applicationPreferences.getInt(PreferenceType.DEFAULT_MAX_SPEED).toString()
-        )
-
         return DefaultSpeedLimit(
             fleetId,
             applicationPreferences.getInt(PreferenceType.DEFAULT_MAX_SPEED)

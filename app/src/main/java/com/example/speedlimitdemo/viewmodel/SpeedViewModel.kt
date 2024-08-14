@@ -21,20 +21,20 @@ class SpeedViewModel @Inject constructor(private val repository: SpeedRepository
 
     private var speedLimit: SpeedLimit? = null
     private lateinit var defaultSpeedLimit: DefaultSpeedLimit
-    val speedLiveData = MutableLiveData<Double>()
+    val speedLiveData = MutableLiveData<Int>()
     val speedLimitExceededLiveData = MutableLiveData<Boolean>()
     val errorLiveData = MutableLiveData<String>()
 
-    fun checkSpeed(currentSpeed: Double) {
+    fun checkSpeed(currentSpeed: Int) {
         val maxSpeed: Int = speedLimit?.maxSpeed ?: defaultSpeedLimit.maxSpeed
         speedLiveData.postValue(currentSpeed)
-        Log.d(SpeedViewModel::class.java.canonicalName,"maxSpeed : $maxSpeed   currentSpeed:$currentSpeed")
+        Log.d(SpeedViewModel::class.java.canonicalName,"Max Speed : $maxSpeed   Current Speed:$currentSpeed")
         if (currentSpeed > maxSpeed) {
             speedLimitExceededLiveData.postValue(true)
             val carId:String = applicationPreferences.getString(PreferenceType.CAR_ID)?:""
             repository.sendNotificationToCompany(
-                title = "Speed Limit Exceeded",
-                message = "Car $carId has exceeded the speed limit.",
+                title = "Speed Limit Exceeded.",
+                message = "Car : $carId has exceeded the speed limit.",
                 carId = carId
             )
         } else {
