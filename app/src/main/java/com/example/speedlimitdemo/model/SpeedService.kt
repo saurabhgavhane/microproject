@@ -10,14 +10,11 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.ServiceCompat
 import com.example.speedlimitdemo.MyApplication
 import com.example.speedlimitdemo.utils.Constants
 import com.example.speedlimitdemo.utils.NotificationsHelper
 import com.example.speedlimitdemo.viewmodel.SpeedViewModel
-import java.math.RoundingMode
-import java.text.DecimalFormat
 import javax.inject.Inject
 
 class SpeedService : Service() {
@@ -26,6 +23,8 @@ class SpeedService : Service() {
     lateinit var speedViewModel: SpeedViewModel
 
     private lateinit var locationManager: LocationManager
+
+    //Location Listener implementation object
     private val locationListener = LocationListenerImpl()
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -36,6 +35,7 @@ class SpeedService : Service() {
         Log.d(SpeedService::class.java.canonicalName, "SERVICE ON CREATE...")
         (application as MyApplication).applicationComponent.inject(this)
 
+        //For mobile.
         startAsForegroundService()
 
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -85,21 +85,11 @@ class SpeedService : Service() {
     private inner class LocationListenerImpl : LocationListener {
         override fun onLocationChanged(location: Location) {
             Log.d(SpeedService::class.java.canonicalName, "SPEED : ${location.speed}")
-            Toast.makeText(this@SpeedService, "SPEED : ${location.speed}", Toast.LENGTH_LONG)
-                .show()
             //Convert m/s to km/h
             val speedInKmH: Double = if (Constants.SHOW_IN_KM) location.speed * 3.6
             else location.speed.toDouble()
             //Update view model livedata
             speedViewModel.checkSpeed(speedInKmH.toInt())
-        }
-
-        private fun formatSpeedValue(speed: Double): String {
-            Log.d("Speed",speed.toString())
-            val df = DecimalFormat("#")
-            df.roundingMode = RoundingMode.CEILING
-
-            return df.format(speed)
         }
 
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}

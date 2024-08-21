@@ -1,12 +1,11 @@
 package com.example.speedlimitdemo.repository
 
-import android.util.Log
 import com.example.speedlimitdemo.manager.NotificationManager
-import com.example.speedlimitdemo.utils.PreferenceType
 import com.example.speedlimitdemo.model.DefaultSpeedLimit
 import com.example.speedlimitdemo.model.SpeedLimit
 import com.example.speedlimitdemo.utils.ApplicationPreferences
 import com.example.speedlimitdemo.utils.Constants
+import com.example.speedlimitdemo.utils.PreferenceType
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -32,6 +32,8 @@ class SpeedViewModel @Inject constructor(private val repository: SpeedRepository
         if (currentSpeed > maxSpeed) {
             speedLimitExceededLiveData.postValue(true)
             val carId:String = applicationPreferences.getString(PreferenceType.CAR_ID)?:""
+
+            //One can add check/delay of specific time to avoid sending continuous notification.
             repository.sendNotificationToCompany(
                 title = "Speed Limit Exceeded.",
                 message = "Car : $carId has exceeded the speed limit.",

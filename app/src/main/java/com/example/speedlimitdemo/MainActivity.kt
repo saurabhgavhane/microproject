@@ -41,16 +41,6 @@ class MainActivity : AppCompatActivity() {
         //Initiate notification client.
         notificationManager.initFirebaseClient()
 
-        Log.d(
-            MainActivity::class.java.canonicalName,
-            "Car id :" + applicationPreferences.getString(PreferenceType.CAR_ID)
-        )
-
-        Log.d(
-            MainActivity::class.java.canonicalName,
-            "Fleet id :" + applicationPreferences.getString(PreferenceType.FLEET_ID)
-        )
-
         // Fleet company sets default speed limit
         speedViewModel.getDefaultSpeedLimit(Constants.CAR_ID, Constants.FLEET_ID)
 
@@ -63,23 +53,26 @@ class MainActivity : AppCompatActivity() {
         speedViewModel.getSpeedLimitForCar(Constants.CAR_ID)
 
 
+        //Observe the speed change and update UI.
         speedViewModel.speedLiveData.observe(this) { speed ->
             // Update UI with current speed
             findViewById<TextView>(R.id.speedTextView).text = "Speed: $speed km/h"
         }
 
+        //Show speed limit exceed warning pop up.
         speedViewModel.speedLimitExceededLiveData.observe(this) { exceeded ->
             if (exceeded) {
                 showWarningAlert()
             }
         }
 
+        //Handle error case.
         speedViewModel.errorLiveData.observe(this) { error ->
             // Handle error
             Toast.makeText(this, error, Toast.LENGTH_LONG).show()
         }
 
-        Log.d(MainActivity::class.java.canonicalName, "STARTING SERVICE..")
+
         //checkLocationPermission()
         //Start the Location Service.
         Intent(this, SpeedService::class.java).also {
@@ -103,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             description = "You are exceeding the speed limit!",
         )
 
-
+        //For Mobile devices.
         /*AlertDialog.Builder(this).setTitle("Speed Warning")
             .setMessage("You are exceeding the speed limit!")
             .setPositiveButton(android.R.string.ok, null).show()

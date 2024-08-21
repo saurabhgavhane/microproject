@@ -18,10 +18,11 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-    initDagger()
+        initDagger()
     }
 
-    private fun initDagger(){
-        applicationComponent = DaggerApplicationComponent.builder().appModule(AppModule(this)).build()
+    private fun initDagger() {
+        applicationComponent =
+            DaggerApplicationComponent.builder().appModule(AppModule(this)).build()
     }
 }
